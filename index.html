@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifrado César</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Cifrado César</h1>
+    <div class="container">
+        
+        <!-- Inicio (1)-->
+        <label for="inputText">Texto:</label>
+        <textarea id="inputText" rows="4" cols="50"></textarea><br>
+        <!-- Fin (1) -->
+        
+        <!-- Inicio (2)-->
+        <label for="modulo">Desplazamiento:</label>
+        <input type="number" id="modulo" min="0"><br>
+        <!-- Fin (2) -->
+        
+        <!-- Inicio (3)-->
+        <label for="encryptionMode">Modo:</label>
+        <select id="encryptionMode">
+            <option value="encrypt">Cifrar</option>
+            <option value="decrypt">Descifrar</option>
+        </select>
+        <!-- Fin (3) -->
+
+        <br><br>
+        <!-- Inicio (4)-->
+        <button onclick="applyCipher()">Aplicar Cifrado</button>
+        <!-- Fin (4) -->
+        <br><br>
+
+        <!-- Inicio (5)-->
+        <label for="outputText">Resultado:</label>
+        <textarea id="outputText" rows="4" cols="50" readonly></textarea>
+        <!-- Fin (5) -->
+    </div>
+
+    <script>
+        function applyCipher() {
+
+            const inputText = document.getElementById('inputText').value;
+            const modulo = parseInt(document.getElementById('modulo').value);
+            const mode = document.getElementById('encryptionMode').value;
+
+            let outputText = '';
+
+            for (let i = 0; i < inputText.length; i++) {
+                let char = inputText[i];
+                let charCode = inputText.charCodeAt(i);
+
+                // Cifrar/descifrar solo letras
+                if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
+                    let baseCharCode = char === char.toLowerCase() ? 'a'.charCodeAt(0) : 'A'.charCodeAt(0);
+
+                    if (mode === 'encrypt') {
+                        charCode = (charCode - baseCharCode + modulo) % 26 + baseCharCode; // Aplicar desplazamiento hacia adelante
+                    } else if (mode === 'decrypt') {
+                        charCode = (charCode - baseCharCode - modulo + 26) % 26 + baseCharCode; // Aplicar desplazamiento hacia atrás
+                    }
+
+                    char = String.fromCharCode(charCode);
+                }
+                outputText += char;
+            }
+
+            document.getElementById('outputText').value = outputText;
+        }
+    </script>
+</body>
+
+</html>
