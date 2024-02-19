@@ -51,33 +51,36 @@
 
     <script>
         function applyCipher() {
-
+            // Inicio (6)
             const inputText = document.getElementById('inputText').value;
             const modulo = parseInt(document.getElementById('modulo').value);
             const mode = document.getElementById('encryptionMode').value;
-
+            // Fin (6)
             let outputText = '';
-
+            //Inicio (7)
             for (let i = 0; i < inputText.length; i++) {
                 let char = inputText[i];
                 let charCode = inputText.charCodeAt(i);
 
-                // Cifrar/descifrar solo letras
+                
                 if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
                     let baseCharCode = char === char.toLowerCase() ? 'a'.charCodeAt(0) : 'A'.charCodeAt(0);
 
                     if (mode === 'encrypt') {
-                        charCode = (charCode - baseCharCode + modulo) % 26 + baseCharCode; // Aplicar desplazamiento hacia adelante
+                        charCode = (charCode - baseCharCode + modulo) % 26 + baseCharCode; 
                     } else if (mode === 'decrypt') {
-                        charCode = (charCode - baseCharCode - modulo + 26) % 26 + baseCharCode; // Aplicar desplazamiento hacia atrás
+                        charCode = (charCode - baseCharCode - modulo + 26) % 26 + baseCharCode; 
                     }
 
                     char = String.fromCharCode(charCode);
                 }
                 outputText += char;
             }
+            //Fin (7)
 
+            //Inicio (8)
             document.getElementById('outputText').value = outputText;
+            //Fin (8)
         }
     </script>
 </body>
